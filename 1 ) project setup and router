@@ -1,0 +1,40 @@
+++++++++++++ main.py ++++++++++++++++
+
+from fastapi import  FastAPI
+from auth_routes import auth_router
+from order_routes import  order_router
+
+
+app = FastAPI()
+
+app.include_router(auth_router)
+app.include_router(order_router)
+
+
+
++++++++++++++++ auth_routes.py ++++++++++++
+
+from fastapi import  APIRouter
+
+auth_router = APIRouter(
+    prefix = "/auth",
+    tags=["auth"]
+)
+
+@auth_router.get("/")
+async  def hello():
+    return {"Message":"hello world"}
+
+
++++++++++++++++++ order_routes.py +++++++++++++
+
+from fastapi import  APIRouter
+
+order_router = APIRouter(
+        prefix = "/orders",
+        tags=["orders"]
+)
+
+@order_router.get("/")
+async  def hello():
+    return {"Message":"hello world"}
