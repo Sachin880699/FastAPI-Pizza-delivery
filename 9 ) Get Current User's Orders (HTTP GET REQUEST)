@@ -1,0 +1,14 @@
++++++++++++++++++++++++++ order_router.py ++++++++++++++++++++++
+
+@order_router.get("/user/orders")
+async def get_us_orders(Authorize:AuthJWT = Depends()):
+    try:
+        Authorize.jwt_required()
+    except Exception as e:
+        raise  HTTPException(
+            status_code = status.HTTP_401_UNAUTHORIZED,
+            detail = "Invalid Token"
+        )
+    user = Authorize.get_jwt_subject()
+    current_user = session.query(User).filter(User.username == user).first()
+    return jsonable_encoder(current_user.orders)
