@@ -1,0 +1,9 @@
+@auth_router.get('/')
+async def hello(Authorize: AuthJWT = Depends()):
+    try:
+        Authorize.jwt_required()
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Invalid Token"
+                            )
+    return {"message": "Hello World"}
